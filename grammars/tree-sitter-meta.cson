@@ -1,0 +1,17 @@
+name: 'Meta'
+scopeName: 'meta'
+type: 'tree-sitter'
+parser: 'tree-sitter-meta'
+
+fileTypes: [
+    'meta'
+]
+
+scopes:
+    'translation_unit': 'source.meta'
+    '''
+        "*",
+        "/",
+        "+",
+        "-"
+    ''': 'keyword.operator'

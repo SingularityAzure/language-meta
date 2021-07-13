@@ -1,0 +1,335 @@
+'name': 'Meta'
+'scopeName': 'source.meta'
+'fileTypes': [
+    'meta'
+    'azl'
+]
+
+'firstLineMatch': '\\bMeta\\s'
+
+'foldingStartMarker': '\{\s*$';
+'foldingStopMarker': '^\s*\}';
+
+'patterns': [
+    {
+        'include': '#comments'
+    }
+    {
+        'begin': '\\b(Meta)\\s*({)'
+        'beginCaptures':
+            '0':
+                'name': 'meta.block.start.meta'
+            '1':
+                'name': 'keyword.control.meta'
+            '2':
+                'name': 'punctuation.section.block.begin.bracket.curly.meta'
+#         'end': '''
+# (?:
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?
+# (?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?)}'''
+        'end': '(?:(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?(?:{(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?})?(?:[^{]|`(?:[^`]|\\\\`)*?{(?:[^`]|\\\\`)*?`)*?)}'
+        # That was gross. Not sure what else to do though...
+        'endCaptures':
+            '0':
+                'name': 'punctuation.section.block.end.bracket.curly.meta'
+        'patterns': [
+            {
+                'include': '#meta'
+            }
+        ]
+    }
+    {
+        'begin': '\\bMeta\\s+'
+        'end': ';'
+        'name': 'meta.line.meta'
+        'beginCaptures':
+            '0':
+                'name': 'keyword.control.meta'
+        'endCaptures':
+            '0':
+                'name': 'punctuation.terminator.statement.meta'
+        'patterns': [
+            {
+                'include': '#meta'
+            }
+        ]
+    }
+]
+'repository':
+    'comments':
+        'patterns': [
+            {
+                'match': '//(\\s?TODO(\\(.*\\))?:)?.*'
+                'name': 'comment.line.double-slash.meta'
+                'captures':
+                    '1':
+                        'name': 'comment.line.double-slash.todo.meta'
+                    '2':
+                        'name': 'comment.line.double-slash.todo.name.meta'
+            }
+            {
+                'match': '/\\*\\*[\\w\\W]*\\*\\*/'
+                'name': 'comment.block.documentation.meta'
+            }
+            {
+                'begin': '/\\*'
+                'end': '\\*/'
+                'name': 'comment.block.meta'
+            }
+            {
+                'begin': '<!--'
+                'end': '-->'
+                'name': 'comment.block.meta'
+            }
+        ]
+    'strings':
+        'patterns': [
+            {
+                'begin': '\\\\{0}`'
+                'end': '\\\\{0}`'
+                'name': 'constant.other.meta'
+                'patterns': [
+                    {
+                        'match': '\\\\`'
+                        'name': 'constant.character.escape.meta'
+                    }
+                    {
+                        'match': '\\$\\$'
+                        'name': 'keyword.operator.wildcard.meta'
+                    }
+                    {
+                        'begin': '\\$\\('
+                        'beginCaptures':
+                            '0':
+                                'name': 'keyword.operator.wildcard.meta'
+                        'end': '\\)'
+                        'endCaptures':
+                            '0':
+                                'name': 'keyword.operator.wildcard.meta'
+                        'name': ''
+                        'patterns': [
+                            {
+                                'include': '#meta'
+                            }
+                        ]
+                    }
+                    # {
+                    #     'match': '\\$\\((?:[^()]+|\\((?:[^()]+|\\((?:[^()]+|\\((?:[^()]+|\\((?:[^()]+)*?\\))*?\\))*?\\))*?\\))*?\\)'
+                    #     'name': 'keyword.operator.wildcard.meta'
+                    # }
+                ]
+            }
+            {
+                'begin': '\\\\{0}"'
+                'end': '\\\\{0}"'
+                'name': 'constant.other.meta'
+                'patterns': [
+                    {
+                        'match': '\\\\[abtnvfre"%\\\\\\n]'
+                        'name': 'constant.character.escape.meta'
+                    }
+                    {
+                        'match': '\\$\\$'
+                        'name': 'keyword.operator.wildcard.meta'
+                    }
+                ]
+            }
+        ]
+    'numbers':
+        'patterns': [
+            {
+                'match': '\\b0b[01]*(\\.[01]*(\\[[01]+\\])?)?'
+                'name': 'constant.numeric.meta'
+            }
+            {
+                'match': '\\b0o[0-7]*(\\.[0-7]*(\\[[0-7]+\\])?)?'
+                'name': 'constant.numeric.meta'
+            }
+            {
+                'match': '\\b0x[\\da-fA-F]*(\\.[\\da-fA-F]*(\\[[\\da-fA-F]+\\])?)?'
+                'name': 'constant.numeric.meta'
+            }
+            {
+                'match': '\\b\\d+((\\.\\d*((\\[\\d+\\])|\\b))|\\b)'
+                'name': 'constant.numeric.meta'
+            }
+        ]
+    'blocks':
+        'patterns': [
+            {
+                'begin': '{'
+                'beginCaptures':
+                    '0':
+                        'name': 'punctuation.section.block.begin.bracket.curly.meta'
+                'end': '}'
+                'endCaptures':
+                    '0':
+                        'name': 'punctuation.section.block.end.bracket.curly.meta'
+                'name': 'meta.block.meta'
+                'patterns': [
+                    {
+                        'include': '#meta'
+                    }
+                    {
+                        'begin': '\\$\\('
+                        'beginCaptures':
+                            '0':
+                                'name': 'keyword.operator.wildcard.meta'
+                        'end': '\\)'
+                        'endCaptures':
+                            '0':
+                                'name': 'keyword.operator.wildcard.meta'
+                        'patterns': [
+                            {
+                                'include': '#meta'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    'punctuation':
+        'patterns': [
+            # {
+            #     'match': '\\{'
+            #     'name': 'punctuation.section.block.begin.bracket.curly.meta'
+            # }
+            # {
+            #     'match': '\\}'
+            #     'name': 'punctuation.section.block.end.bracket.curly.meta'
+            # }
+            {
+                'match': '\\('
+                'name': 'punctuation.section.parens.begin.bracket.round.meta'
+            }
+            {
+                'match': '\\)'
+                'name': 'punctuation.section.parens.end.bracket.round.meta'
+            }
+            {
+                'match': '\\['
+                'name': 'punctuation.section.parens.begin.bracket.square.meta'
+            }
+            {
+                'match': '\\]'
+                'name': 'punctuation.section.parens.end.bracket.square.meta'
+            }
+            {
+                'match': ';'
+                'name': 'punctuation.terminator.statement.meta'
+            }
+        ]
+    'operators':
+        'patterns': [
+            {
+                'match': '\\+=|-=|\\*=|/=|%='
+                'name': 'keyword.operator.assignment.compound.meta'
+            }
+            {
+                'match': '!=|==|<=|>=|<|>'
+                'name': 'keyword.operator.comparison.meta'
+            }
+            {
+                'match': '\\b(and|or|not)\\b'
+                'name': 'keyword.operator.logical.meta'
+            }
+            {
+                'match': '=|:|:='
+                'name': 'keyword.operator.assignment.meta'
+            }
+            {
+                'match': '\\+|-|\\*|/|%'
+                'name': 'keyword.operator.arithmetic.meta'
+            }
+            {
+                'match': ','
+                'name': 'keyword.operator.delimiter.meta'
+            }
+            {
+                'match': '\\.'
+                'name': 'keyword.operator.context-access.meta'
+            }
+        ]
+    'keywords':
+        'patterns': [
+            {
+                'match': '\\b(if|else|where)\\b'
+                'name': 'keyword.control.conditional.meta'
+            }
+            {
+                'match': '\\b(while|for|each|in|continue|from|to|thru)\\b'
+                'name': 'keyword.control.loop.meta'
+            }
+            {
+                'match': '\\b(Meta|CommentsC|CommentsHTML|CommentsLine|CommentsBlock|Print|SystemExecute|FileWrite|AddKeyword|RemoveKeyword|Import|Export|Module|Echo|Exec|RemoveWhitespace|CrushWhitespace|return|Assert)\\b'
+                'name': 'keyword.control.meta'
+            }
+            {
+                'match': '\\b(?:\\.?([\\w\\d_]+)\\s*(=)\\s*)?(Func)\\b'
+                'captures':
+                    '1':
+                        'name': 'entity.name.function.meta'
+                    '2':
+                        'name': 'keyword.operator.assignment.meta'
+                    '3':
+                        'name': 'storage.modifier.meta'
+            }
+            {
+                'match': '\\b(RemoveExtension|Substring|Split|Join|Length|MetaProgram|Format|RemoveMetaBlocks|FileRead|Trim|TypeOf|Bool|Float|Integer|String|Symbols|Context|Function|Reference|Array|Type|Program|Exists)\\b'
+                'name': 'storage.modifier.meta'
+            }
+            {
+                'match': '(\\bprogram(\\.((input(\\.(filename|baseDirectory))?)|symbols|caseSensitive))?|\\bTrue|\\bFalse|\\.debug|\\.autocomplete(\\.(enabled|filename|line|column))?)\\b'
+                'name': 'constant.language.meta'
+            }
+            {
+                'match': '(?!\\s)([\\w\\d_]+)(?=\\s*\\()'
+                'name': 'entity.name.function.meta'
+            }
+        ]
+    'meta':
+        'patterns': [
+            {
+                'include': '#comments'
+            }
+            {
+                'match': '\\$\\$'
+                'name': 'keyword.operator.wildcard.meta'
+            }
+            {
+                'include': '#strings'
+            }
+            {
+                'include': '#blocks'
+            }
+            {
+                'include': '#keywords'
+            }
+            {
+                'include': '#numbers'
+            }
+            {
+                'include': '#punctuation'
+            }
+            {
+                'include': '#operators'
+            }
+            # {
+            #     'begin': '\\b(Func)\\(\\s*(([\\w\\d]+\\s*,\\s*)*[\\w\\d]+)?\\s*\\)\\s*\\{'
+            #     'beginCaptures':
+            #         '1':
+            #             'name': 'keyword.operator.function.meta'
+            #     'end': '\\}[;,]'
+            # }
+        ]

@@ -1,0 +1,19 @@
+{
+  "name": "language-meta",
+  "version": "0.6.0",
+  "description": "Grammar for the Meta Language",
+  "keywords": [
+      "tree-sitter"
+  ],
+  "activationCommands": {
+    "atom-workspace": "language-meta:toggle"
+  },
+  "repository": "https://github.com/atom/language-meta",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+      "tree-sitter-meta": ">=0.6.0"
+  }
+}
