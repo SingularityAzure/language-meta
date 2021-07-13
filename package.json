@@ -1,9 +1,9 @@
 {
   "name": "language-meta",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Grammar for the Meta Language",
   "keywords": [
-      "tree-sitter"
+    "tree-sitter"
   ],
   "activationCommands": {
     "atom-workspace": "language-meta:toggle"
@@ -14,6 +14,6 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
-      "tree-sitter-meta": ">=0.6.0"
+    "tree-sitter-meta": ">=0.6.0"
   }
 }
